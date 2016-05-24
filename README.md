@@ -1,1 +1,3 @@
-# Implementation of various Memory management algorithms
+# Memory Manager
+
+## Implementation of various memory management algorithms
