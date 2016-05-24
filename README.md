@@ -1,6 +1,6 @@
 #Memory Manager
 
-Implementation of various memory management algorithms
+Library to chose a memory manager for your application
 
 * Kernel based
 * Buddy allocator
