@@ -10,6 +10,9 @@
 typedef struct memmanager {
 	void * (*malloc)(size_t);
 	void   (*free)(void *);
+	void * data; /* what data? Since void, each allocator can have its own data structure */`
 } memmanager;
 
 memmanager * mem_manager_get(int type);
+void * mem_malloc(size_t size);
+void mem_free(void *ptr);
