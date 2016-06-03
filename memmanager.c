@@ -4,27 +4,26 @@ memmanager * mem_manager_get(int type) {
 	memmanager *m = (memmanager *) malloc(sizeof(memmanager));
 	m->type = type;
 	m->data = NULL;
+	switch (type) {
+	case KERNEL:
+		m->m_malloc = malloc;
+		m->m_free = free;
+		break;
+	case BEST_FIT:
+		m->m_malloc = malloc_best_fit;
+		m->m_free = free_best_fit;
+		break;
+	default:
+		m->m_malloc = NULL;
+		m->m_free = NULL;	
+	}
 	return m;
 }
 
 void * mem_malloc(memmanager *m, size_t size) {
-	switch(m->type) {
-	case KERNEL:
-		return malloc(size);
-	case BEST_FIT:
-		return malloc_best_fit(m, size);
-	case default:
-		return NULL;
-	}	
+	m->m_malloc(size, m);
 }
 
 void mem_free(memmananger *m, void *ptr) {
-	switch(m->type) {
-	case KERNEL:
-		return free(size);
-	case BEST_FIT:
-		return free_best_fit(m, size);
-	case default:
-		return; //possible memory leak TODO: check this condition later
-	}	
+	m->m_free(ptr, m);
 }
