@@ -2,15 +2,18 @@
 
 memmanager * mem_manager_get(int type) {
 	memmanager *m = (memmanager *) malloc(sizeof(memmanager));
-	switch(type) {
-		case KERNEL:
-			/* Every allocator should have its own init fn like kern_init(m)*/
-			return m;
-	}
-	return NULL;
+	m->type = type;
+	m->data = NULL;
+	return m;
 }
 
 void * mem_malloc(memmanager *m, size_t size) {
+	switch(m->type) {
+	case KERNEL:
+		return malloc(size);
+	case BEST_FIT:
+		return malloc_best_fit(m, size);
+	}
 	return m->malloc(size);
 }
 

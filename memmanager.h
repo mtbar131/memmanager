@@ -7,12 +7,15 @@
 #define WORST_FIT 5
 #define SIZE_CLS 6
 
+#define BASE_MEMORY_SIZE 100000 // We will start by allocating this much memory
+// to our algorithm. For now user can not go beyond this limit. Think of this as max RAM available
+
 typedef struct memmanager {
-	void * (*malloc)(size_t);
-	void   (*free)(void *);
-	void * data; /* what data? Since void, each allocator can have its own data structure */`
+	int type;
+	void * data; /* All data structures required by the memory manager */
+	void * memory; /* The actual RAM from which malloc will allocate memory */
 } memmanager;
 
 memmanager * mem_manager_get(int type);
-void * mem_malloc(size_t size);
-void mem_free(void *ptr);
+void * mem_malloc(memmanager *m, size_t size);
+void mem_free(memanager *m, void *ptr);
