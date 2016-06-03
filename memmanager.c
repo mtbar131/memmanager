@@ -24,6 +24,9 @@ void * mem_malloc(memmanager *m, size_t size) {
 	m->m_malloc(size, m);
 }
 
-void mem_free(memmananger *m, void *ptr) {
+void mem_free(memmanager *m, void *ptr) {
 	m->m_free(ptr, m);
+}
+
+int main() {
 }

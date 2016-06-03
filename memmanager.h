@@ -5,8 +5,6 @@
 #ifndef _MEM_MANAGER_H
 #define _MEM_MANAGER_H
 
-#include "best_fit/best_fit.h"
-
 #define KERNEL 1
 #define BUDDY 2
 #define BEST_FIT 3
@@ -29,5 +27,7 @@ typedef struct memmanager {
 memmanager * mem_manager_get(int type);
 void * mem_malloc(memmanager *m, size_t size);
 void mem_free(memmanager *m, void *ptr);
+
+#include "best_fit/best_fit.h"
 
 #endif
