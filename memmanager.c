@@ -13,10 +13,18 @@ void * mem_malloc(memmanager *m, size_t size) {
 		return malloc(size);
 	case BEST_FIT:
 		return malloc_best_fit(m, size);
-	}
-	return m->malloc(size);
+	case default:
+		return NULL;
+	}	
 }
 
 void mem_free(memmananger *m, void *ptr) {
-	m->free(ptr);
+	switch(m->type) {
+	case KERNEL:
+		return free(size);
+	case BEST_FIT:
+		return free_best_fit(m, size);
+	case default:
+		return; //possible memory leak TODO: check this condition later
+	}	
 }
