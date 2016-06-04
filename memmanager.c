@@ -5,25 +5,27 @@ memmanager * mem_manager_get(int type) {
 	m->type = type;
 	m->data = NULL;
 	switch (type) {
-	case KERNEL:
-		m->m_malloc = malloc;
-		m->m_free = free;
-		break;
-	case BEST_FIT:
-		m->m_malloc = malloc_best_fit;
-		m->m_free = free_best_fit;
-		break;
-	default:
-		m->m_malloc = NULL;
-		m->m_free = NULL;	
+		case KERNEL:
+			break;
+		case BEST_FIT:
+			m->m_malloc = malloc_best_fit;
+			m->m_free = free_best_fit;
+			break;
+		case FIRST_FIT:
+			m->m_malloc = malloc_first_fit;
+			m->m_free = free_first_fit;
+			break;
+		default:
+			free(m);
+			return NULL;
 	}
 	return m;
 }
 
 void * mem_malloc(memmanager *m, size_t size) {
-	m->m_malloc(size, m);
+	return m->type == KERNEL ? malloc(size) : m->m_malloc(m, size);
 }
 
-void mem_free(memmananger *m, void *ptr) {
-	m->m_free(ptr, m);
+void mem_free(memmanager *m, void *ptr) {
+	m->type == KERNEL ? free(ptr) : m->m_free(m, ptr);
 }

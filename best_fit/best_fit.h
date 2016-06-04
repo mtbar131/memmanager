@@ -1,10 +1,13 @@
-#ifndef _BEST_FIT_H
-#define _BEST_FIT_H
+#include<stdlib.h>
 
 #include "../memmanager.h"
 
+#ifndef _BEST_FIT_H
+#define _BEST_FIT_H
+
+
 typedef struct allocated_mem_info {
-	void *head; //pointer to head of allocated memory
+	void * head; //pointer to head of allocated memory
 	size_t size; // amount of memory allocated
 } allocated_mem_info;
 
@@ -16,9 +19,7 @@ typedef struct best_fit_data {
 	int OCCUPIED; //  Total amount of already occupied RAM
 } best_fit_data;
 
-void * malloc_best_fit(size_t size,
-		       memmanager *m);
+void * malloc_best_fit(memmanager *m, size_t size);
 
-void  free_best_fit(void *ptr,
-		    memmanager *m);
+void  free_best_fit(memmanager *m, void *ptr);
 #endif
