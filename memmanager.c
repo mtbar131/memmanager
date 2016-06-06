@@ -29,3 +29,6 @@ void * mem_malloc(memmanager *m, size_t size) {
 void mem_free(memmanager *m, void *ptr) {
 	m->type == KERNEL ? free(ptr) : m->m_free(m, ptr);
 }
+
+int main() {
+}
