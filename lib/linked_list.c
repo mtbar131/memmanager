@@ -78,6 +78,11 @@ void print_int(void *num) {
         printf("%d,", *((int*)num));
 }
 
+void* merge_data(const void *a, const void *b) {
+        int *p = (int*)malloc (sizeof(int));
+        *p = *((int*)a) + *((int*)b);
+        return (void*)p;
+}
 int main() {
         LinkedList *list = create_new_linked_list();
         int i;
@@ -101,8 +106,9 @@ int main() {
         n = (node*)malloc (sizeof(node));
         n->data = (void*)&arr[11];
         insert_at(list, n, 10);
-        removeAt(list, 8);
-        removeAt(list, 9);
+        print_list(list, print_int);
+        merge_consecutive_nodes(list, 0, 1, merge_data);
+        merge_consecutive_nodes(list, 8, 9, merge_data);
         print_list(list, print_int);
         return 0;
 }

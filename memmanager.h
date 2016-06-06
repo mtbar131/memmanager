@@ -1,4 +1,6 @@
+#include<stdio.h>
 #include<stdlib.h>
+
 
 #ifndef _MEM_MANAGER_H
 #define _MEM_MANAGER_H
