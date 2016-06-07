@@ -34,6 +34,14 @@ void merge_consecutive_nodes(LinkedList*, int, int,
 // Inserts given node at given position - 0 based indexing
 void insert_at(LinkedList*, node*, int);
 
+// Inserts node when given function returns true value
+// this function will take first pointer as given node and second pointer
+// as each node in list. This function should compare these two nodes
+// and return true so that given node will be inserted at that position
+void insert_when_true(LinkedList*, node*,
+                      int (*condition)(const void*, const void*));
+
+
 // prints contents of the list. Need to pass the function to print data
 void print_list(LinkedList*, void (*print_data)(void *));
 

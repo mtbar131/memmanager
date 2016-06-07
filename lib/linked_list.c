@@ -63,6 +63,17 @@ void insert_at(LinkedList *l, node *n, int position) {
         l->length++;
 }
 
+void insert_when_true(LinkedList *l, node *n,
+                      int (*condition)(const void*, const void*)) {
+        node **walk = &l->head;
+        while (!condition(n, *walk)) {
+                walk = &((*walk)->next);
+        }
+        n->next = (*walk);
+        (*walk) = n;
+        l->length++;
+}
+
 void print_list(LinkedList *l, void (*print_data)(void *)) {
         node *walk = l->head;
         while (walk != NULL) {
@@ -108,7 +119,7 @@ int main() {
         insert_at(list, n, 10);
         print_list(list, print_int);
         merge_consecutive_nodes(list, 0, 1, merge_data);
-        merge_consecutive_nodes(list, 8, 9, merge_data);
+        
         print_list(list, print_int);
         return 0;
 }
