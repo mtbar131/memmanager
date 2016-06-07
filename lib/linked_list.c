@@ -66,7 +66,7 @@ void insert_at(LinkedList *l, node *n, int position) {
 void insert_when_true(LinkedList *l, node *n,
                       int (*condition)(const void*, const void*)) {
         node **walk = &l->head;
-        while (!condition(n, *walk)) {
+        while (*walk != NULL && !condition(n, *walk)) {
                 walk = &((*walk)->next);
         }
         n->next = (*walk);
@@ -94,6 +94,17 @@ void* merge_data(const void *a, const void *b) {
         *p = *((int*)a) + *((int*)b);
         return (void*)p;
 }
+
+int comp(const void *a, const void *b) {
+  node *p = ((node*)a);
+  node *q = ((node*)b);
+  int x, y;
+  x = *((int*)p->data);
+  y = *((int*)q->data);
+  if (y - x <= 0)
+    return 0;
+  return 1;
+}
 int main() {
         LinkedList *list = create_new_linked_list();
         int i;
@@ -101,25 +112,23 @@ int main() {
         int arr[12];
         for (i = 0; i < 10; i++) {
           n = (node*)malloc (sizeof(node));
-          arr[i] = i;
+          arr[i] = i * 10;
           n->data = (void*)&arr[i];
-          append(list, n);
+          insert_when_true(list, n, comp);
         }
         print_list(list, print_int);
-        arr[10] = 10;
-        arr[11] = 11;
+        arr[10] = 25;
+        arr[11] = 190;
         removeAt(list, 0);
         print_list(list, print_int);
         n = (node*)malloc (sizeof(node));
         n->data = (void*)&arr[10];
-        insert_at(list, n, 0);
+        insert_when_true(list, n, comp);
         print_list(list, print_int);
         n = (node*)malloc (sizeof(node));
         n->data = (void*)&arr[11];
-        insert_at(list, n, 10);
-        print_list(list, print_int);
         merge_consecutive_nodes(list, 0, 1, merge_data);
-        
+        insert_when_true(list, n, comp);
         print_list(list, print_int);
         return 0;
 }
